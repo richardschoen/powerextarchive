@@ -3,3 +3,6 @@ This is an archive for the old IBM i assets from the powerEXT RPG CGI project by
 
 Downloaded from here: https://code.google.com/archive/p/powerext/source
 <img width="850" height="632" alt="image" src="https://github.com/user-attachments/assets/7c5ed1d1-138f-4b20-a300-d4a86068a9e2" />
+
+I haven't seen Henrik online in a while so he most likely no onger support this code. 
+
