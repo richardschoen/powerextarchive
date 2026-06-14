@@ -1,0 +1,104 @@
+INSTALLATION OF powerEXT Application Framework Version 1.3
+----------------------------------------------------------
+
+
+****************************************************************
+PLEASE NOTE: powerEXT Core 4.0 is no longer part of the powerEXT 
+Application Framework, but now a prerequisite for powerEXT AF.
+****************************************************************
+
+
+Includes: powerEXT Application Framework Version 1.3
+
+
+The installation procedure is simple and requires 
+i5/OS V5R4 (or later) & WDS (5722WDS) & SQL DevKit (5722ST1)
+and powerEXT Core 4.0.
+
+The basic installation uses about 500MB + additional 150MB
+per server instance 
+
+** the installation should be run under an   **
+** user profile with *ALLOBJ authority       ** 
+
+** WARNING - if any of the below mentioned   **
+** libraries or directories is on the system **
+** prior to installation they will be over-  **
+** written without any notice                **
+
+1. Download the savf to your PC and unzip it
+2. FTP it to a savf on your iSeries 
+3. Restore the library PEXTAFW from it 
+4. Run CALL PEXTAFW/PXINSTALL PARM('*CURRENT')
+
+ - installs the following libraries:
+   - PEXTCGI     powerEXT CGI Library : powerEXT AFW
+   - PEXTDTA     powerEXT DB2 Database: Empty   
+   - PEXTDTASTD  powerEXT DB2 Database: powerEXT AFW
+   - PEXTLIB     powerEXT PGM Library : powerEXT AFW
+   - PEXTQUE     powerEXT QUE Library : Batch Wait & PDF support
+   - PEXTTMP     powerEXT TMP library : Temporary objects
+
+ - converts all source files to your jobs CCSID and 
+      recompiles all programs to current i5/OS version.
+
+ - Creates the following directories:
+   - /pextWebSTD        powerEXT Apache server incl. Ext JS 3.2.0
+   - /powerEXT          powerEXT Templates
+   - /powerEXT/apache   Basic Apache Server (for creating new instanses)
+   - /powerEXT/STD      powerEXT Application Framework - Standard Instance 
+   - /powerEXTarchive   powerEXT IFS Archive
+
+   - Creates the Apache server pextWebSTD in QUSRSYS/QATMHINSTC
+
+Before the start of the powerEXT main Apache serverdocument 
+/pextWebSTD/conf/httpd.conf must be changed: 
+
+ - ServerUserId QTMHHTP1    change to a OS/i user that has *ALLOBJ
+ - Listen 1502              change if another port should be used
+
+Start the server:
+
+STRTCPSVR SERVER(*HTTP) HTTPSVR(PEXTWEBSTD)
+
+http://yourip:1502
+
+UserID    "Admin"
+Password  "admin"
+
+IMPORTANT !!!! 
+DO NOT use the STD server or any of the delivered libraries for 
+development or test - any reinstallation will replace the delivered
+libraries. 
+
+Instead create your own from the STD instance by selecting
+- powerEXT Application Framework
+-- Development Tool Box
+--- Create a powerEXT Environment/Apache Server
+
+This function will prompt for Title, Homepage, Sys Id, OS/i user
+and port number and create a complete environment:
+
+Each server created is identified by a 3 char System Id (XXX)
+
+- Created Libraries
+   - PEXTCGIXXX  powerEXT CGI Library : 
+   - PEXTDTAXXX  powerEXT DB2 Database:   
+   - PEXTLIBXXX  powerEXT PGM Library : 
+   - PEXTRPCXXX  powerEXT RPC Library : 
+
+- Created Directories
+   - /pextWebXXX/...
+   - /powerEXT/XXX/...
+
+- Creates the Apache server pextWebXXX in QUSRSYS/QATMHINSTC
+
+Start the server:
+
+STRTCPSVR SERVER(*HTTP) HTTPSVR(PEXTWEBXXX)
+
+http://yourip:yourport
+
+UserID    "Admin"
+Password  "admin"
+
